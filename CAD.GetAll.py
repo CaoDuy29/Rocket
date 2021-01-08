@@ -6,10 +6,9 @@ diegojsanchez@gmail.com #masalladedynamo
 import clr 
 clr.AddReference('RevitAPI')
 import Autodesk
-from Autodesk.Revit.DB import FilteredElementCollector,CADLinkType, ImportInstance
+from Autodesk.Revit.DB import FilteredElementCollector, ImportInstance
 clr.AddReference('RevitServices')
 from RevitServices.Persistence import DocumentManager
-#inputs
 doc = DocumentManager.Instance.CurrentDBDocument
 #mainbody
 ins = FilteredElementCollector(doc).OfClass(ImportInstance).ToElements() # Para obtener las instancias de los elementos importados
