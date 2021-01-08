@@ -1,5 +1,6 @@
 '''
 CAD.GetAll 21/12/2020
+Goal: Get all the import instances (CAD) and their names.
 diegojsanchez@gmail.com #masalladedynamo
 '''
 # bibliotecas
@@ -12,6 +13,6 @@ from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
 #mainbody
 ins = FilteredElementCollector(doc).OfClass(ImportInstance).ToElements() # Para obtener las instancias de los elementos importados
-nombre = [x.Category.Name for x in ins]
+nombre = [x.Category.Name for x in ins] # Para acceder al nombre del cad
 #output
 OUT = ins, nombre
