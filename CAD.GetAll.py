@@ -12,8 +12,7 @@ from RevitServices.Persistence import DocumentManager
 #inputs
 doc = DocumentManager.Instance.CurrentDBDocument
 #mainbody
-cads= FilteredElementCollector(doc).OfClass(CADLinkType).ToElements() # Para recolectar los archivos de Autocad importados
-iins = FilteredElementCollector(doc).OfClass(ImportInstance).ToElements() # Para obtener las instancias de los elementos importados
-nombre = [x.Category.Name for x in cads]
+ins = FilteredElementCollector(doc).OfClass(ImportInstance).ToElements() # Para obtener las instancias de los elementos importados
+nombre = [x.Category.Name for x in ins]
 #output
-OUT = cads, iins, nombre
+OUT = ins, nombre
