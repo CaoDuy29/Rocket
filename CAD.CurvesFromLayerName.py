@@ -19,22 +19,22 @@ doc = DocumentManager.Instance.CurrentDBDocument #Necesitamos acceder al documen
 #inputs
 cad = UnwrapElement(IN[0]) #Necesita un ImportInstance
 capa = IN[1] #Necesita un string
-curvas, solidos, salida = [], [], []
+geometrias, curvasDynamo = [], []
 #mainbody
-geOpt = cad.get_Geometry(Options()) #Accedemos a las opciones de geometría
-geCur = [g.GetInstanceGeometry() for g in geOpt] #Obtenemos todas las geometrías almacenadas en una lista que almacena todo
-for g in geCur[0]: #Separamos los solidos del resto de geometrías (los solidos son sombreados en autocad)
+opciones = cad.get_Geometry(Options()) #Accedemos a las opciones de geometría
+listaGeometrias = [g.GetInstanceGeometry() for g in opciones] #Obtenemos todas las geometrías almacenadas en una lista que almacena todo
+for g in listaGeometrias[0]: #Separamos los solidos del resto de geometrías (los solidos son sombreados en autocad y los descartamos)
 	if str(g.GetType()) != "Autodesk.Revit.DB.Solid":
-		curvas.append(g)
+		geometrias.append(g)
 	else:
 		pass
-graId = [c.GraphicsStyleId for c in curvas] #Busco el id del estilo grafico de las curvas que esta vinculado a la capa de cad
-graEl = [doc.GetElement(id) for id in graId] #Conocido el id busco el elemento
-grNam = [s.GraphicsStyleCategory.Name for s in graEl] #Busco el nombre de la capa de cada geometria
-for n,c in zip(grNam,curvas):
+idCapas = [c.GraphicsStyleId for c in geometrias] #Busco el id del estilo grafico o capa de las curvas
+capas = [doc.GetElement(id) for id in idCapas] #Conocido el id busco la capa
+nombres = [s.GraphicsStyleCategory.Name for s in capas] #Busco el nombre de la capa de cada geometria
+for n,c in zip(nombres,geometrias):
 	if capa == n:
-		salida.append(c.ToProtoType()) #Convierto las curvas de revit a curvas de dynamo
+		curvasDynamo.append(c.ToProtoType()) #Convierto las curvas de revit a curvas de dynamo
 	else:
 		pass
 #output
-OUT = salida
+OUT = curvasDynamo
