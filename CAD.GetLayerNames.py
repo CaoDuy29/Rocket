@@ -1,6 +1,8 @@
 '''
-CAD.GetLayerNames 21/12/2020
+CAD.GetLayerNames
+Goal: Get all layer names of an import instance.
 diegojsanchez@gmail.com #masalladedynamo
+v: 1.0.1
 '''
 # bibliotecas
 import clr 
