@@ -18,7 +18,7 @@ from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument #Necesitamos acceder al documento
 #inputs
 cad = UnwrapElement(IN[0]) #Necesita un ImportInstance
-capa = IN[1] #Necesita un string
+capa = str(IN[1]) #Necesita un string
 geometrias, curvasDynamo = [], []
 #mainbody
 opciones = cad.get_Geometry(Options()) #Accedemos a las opciones de geometría
