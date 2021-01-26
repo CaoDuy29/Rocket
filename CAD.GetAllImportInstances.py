@@ -1,5 +1,5 @@
 '''
-CAD.GetImportInstances
+CAD.GetAllImportInstances
 Goal: Get all the import instances (CAD) and their names.
 diegojsanchez@gmail.com #masalladedynamo
 v: 1.0.1
