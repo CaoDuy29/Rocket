@@ -1,5 +1,5 @@
 '''
-CAD.GetDWG.FilterByName
+CAD.GetDwgFilterByName
 Goal: Filter by name and select the ImportInstance (CAD).
 diegojsanchez@gmail.com #masalladedynamo
 v: 1.0.1
