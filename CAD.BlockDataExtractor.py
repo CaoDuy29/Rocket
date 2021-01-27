@@ -8,22 +8,25 @@ v: 1.0.1
 import clr
 clr.AddReference('RevitAPI')
 import Autodesk
-from Autodesk.Revit.DB import * #Options #Clave para acceder a las opciones de geometría del cad
+from Autodesk.Revit.DB import Options, Element, XYZ #Options es clave para acceder a las opciones de geometría del cad
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.GeometryConversion) #Clave para convertir a curvas de dynamo
-clr.AddReference('ProtoGeometry')
-from Autodesk.DesignScript.Geometry import Line #Necesario para el desplazamiento de geometrias
 clr.AddReference('RevitServices')
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument #Necesitamos acceder al documento
 #definiciones
 def desplazamientoOrigen(geometrias):
-	ptoOrigenCAD = cad.GetTransform().Origin.ToPoint() #Podemos llamarlo el internalPoint de cad o scp universal
-	ptoOrigenRVT = XYZ(0,0,0).ToPoint() #InternalPoint de revit
-	linea = Autodesk.DesignScript.Geometry.Line.ByStartPointEndPoint(ptoOrigenRVT, ptoOrigenCAD)
-	return [g.Translate(linea.Direction,linea.Length) for g in geometrias]
+	poCAD = cad.GetTransform().Origin.ToPoint() #Punto origen: Podemos llamarlo el internalPoint de cad o scp universal
+	poRVT = XYZ(0,0,0).ToPoint() #Punto origen: InternalPoint de revit
+	distancia = poRVT.DistanceTo(poCAD)
+	vector = XYZ(poCAD.X - poRVT.X, poCAD.Y - poRVT.Y, poCAD.Z - poRVT.Z).ToVector() #Punto origen: InternalPoint de revit
+	#vector = XYZ(poRVT.X - poCAD.X, poRVT.Y - poCAD.Y, poRVT.Z - poCAD.Z).ToVector() #Punto origen: InternalPoint de revit
+	if distancia != 0:
+		return [g.Translate(vector,distancia) for g in geometrias]
+	else:
+		return geometrias
 #inputs
 cad = UnwrapElement(IN[0]) #Necesita un ImportInstance
 geometrias, nombres, idCapas = [], [], []
