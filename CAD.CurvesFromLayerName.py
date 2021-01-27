@@ -1,5 +1,5 @@
 '''
-CAD.CurvesFromLayerName 28/12/2020
+CAD.CurvesFromLayerName
 Goal: Get dynamo curves from an import instance and a layer name.
 diegojsanchez@gmail.com #masalladedynamo
 v: 1.0.1
