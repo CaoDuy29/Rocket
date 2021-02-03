@@ -4,7 +4,7 @@ Goal: Extract information from CAD blocks
 diegojsanchez@gmail.com #masalladedynamo
 v: 1.0.1
 '''
-
+"Kevin no metas lineas vacias en mi codigo, por favor. JAJA"
 
 #biblioteca
 import clr
