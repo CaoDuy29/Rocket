@@ -1,0 +1,30 @@
+'''
+PhaseFilter.DeleteDefault
+Goal: Remove default phase filters.
+diegojsanchez@gmail.com #masalladedynamo
+v: 1.0.1
+'''
+
+#bibliotecas
+import clr 
+clr.AddReference('RevitAPI')
+import Autodesk
+from Autodesk.Revit.DB import FilteredElementCollector, PhaseFilter
+clr.AddReference('RevitServices')
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+#inputs
+filtros = FilteredElementCollector(doc).OfClass(PhaseFilter).ToElements() #Colecto todos los filtros de fase
+#mainbody
+salida = []
+TransactionManager.Instance.EnsureInTransaction(doc)
+for f in filtros:
+	if f.IsDefault == True:
+		doc.Delete(f.Id) #Elimino el filtro dando el Id
+		salida.append("Filtro de fase eliminado")
+	else:
+		salida.append("Filtro conservado")	
+TransactionManager.Instance.TransactionTaskDone()
+#output
+OUT= salida
